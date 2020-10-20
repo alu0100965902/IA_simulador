@@ -6,19 +6,21 @@ using namespace std;
 
 class entorno {
   private:
-    pair <int, int> puntoInicial;
-    pair <int, int> puntoFinal;
-    vector <vector <celda>> malla;
+    pair <int, int> puntoInicial_;
+    pair <int, int> puntoFinal_;
+    vector <vector <celda>> malla_;
     coche coche_;
+
   public:
     entorno() { 
     }
+    
     entorno(int nFilas, int nColumnas) {
-      malla.resize(nFilas);
+      malla_.resize(nFilas);
       for (int i = 0; i <= nFilas; i++) {
-        malla[i].resize(nColumnas);
-        for (int j = 0; j < malla[i].size(); j++) {
-          malla[i][j].set_pos(i, j);
+        malla_[i].resize(nColumnas);
+        for (int j = 0; j < malla_[i].size(); j++) {
+          malla_[i][j].set_pos(i, j);
         }
       }
     }

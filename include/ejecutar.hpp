@@ -2,9 +2,10 @@
 
 using namespace std;
 
-class ejecutar{
+class ejecutar {
   private:
   entorno entorno_;
+
   public:
     ejecutar() {
     }

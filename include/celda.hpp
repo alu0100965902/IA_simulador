@@ -4,28 +4,29 @@ using namespace std;
 
 class celda {
   private:
-    int x;
-    int y;
-    bool ocupada;
+    int x_;
+    int y_;
+    bool ocupada_;
+
   public:
     celda(){
-      ocupada = false;
+      ocupada_ = false;
     }
-    celda(int x_, int y_){
-      x = x_;
-      y = y_;
+    celda(int x, int y) {
+      x_ = x;
+      y_ = y;
     }
-    celda(int x_, int y_, bool ocupada_) {
-      x = x_;
-      y = y_;
-      ocupada = ocupada_;
+    celda(int x, int y, bool ocupada) {
+      x_ = x;
+      y_ = y;
+      ocupada_ = ocupada;
     }
-    ~celda(){
+    ~celda() {
     }
     int get_x();
     int get_y();
-    int set_x();
-    int set_y();
+    int set_x(int x);
+    int set_y(int y);
     int set_pos(int x, int y);
     bool comprobar_ocupada();
     void ocupar();
