@@ -15,7 +15,7 @@ int main (void) {
     switch(opcion) {
       case 1:
         break;
-      case 2:{
+      case 2:
         int x = 0, y = 0;
         cout << "Indique la posicion X e Y" << endl;
         cout << "X: ";
@@ -24,7 +24,7 @@ int main (void) {
         cin >> y;
         cout << "\n";
         simulador.pedir_ocupadas(x, y);
-        break;}
+        break;
       case 3:
         break;
       default:
