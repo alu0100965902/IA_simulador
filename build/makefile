@@ -1,0 +1,28 @@
+CC=g++ 
+CFLAGS=-I -std=c++11 -g
+
+OBJ = ../obj/main.o ../obj/celda.o ../obj/coche.o ../obj/entorno.o ../obj/ejecutar.o
+
+all: simulador
+
+../obj/main.o: ../src/main.cpp ../include/celda.hpp ../include/coche.hpp ../include/entorno.hpp ../include/ejecutar.hpp
+	$(CC) -c -o $@ $< $(CFLAGS) 
+
+../obj/celda.o: ../src/celda.cpp
+	$(CC) -c -o $@ $< $(CFLAGS)
+
+../obj/coche.o: ../src/coche.cpp
+	$(CC) -c -o $@ $< $(CFLAGS)
+
+../obj/entorno.o: ../src/entorno.cpp
+	$(CC) -c -o $@ $< $(CFLAGS)
+
+../obj/ejecutar.o: ../src/ejecutar.cpp
+	$(CC) -c -o $@ $< $(CFLAGS) 
+
+simulador: ${OBJ}
+	$(CC) -o $@ $^ $(CFLAGS)
+
+clean:
+	rm -f *.o
+	rm simulador
