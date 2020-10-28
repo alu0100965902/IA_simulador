@@ -8,15 +8,15 @@ int celda::get_y() {
   return y_;
 }
 
-int celda::set_x(int x) {
+void celda::set_x(int x) {
   x_ = x;
 }
 
-int celda::set_y(int y) {
+void celda::set_y(int y) {
   y_ = y;
 }
 
-int celda::set_pos(int x, int y) {
+void celda::set_pos(int x, int y) {
   x_ = x;
   y_ = y;
 }

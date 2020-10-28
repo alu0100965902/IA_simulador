@@ -25,9 +25,9 @@ class celda {
     }
     int get_x();
     int get_y();
-    int set_x(int x);
-    int set_y(int y);
-    int set_pos(int x, int y);
+    void set_x(int x);
+    void set_y(int y);
+    void set_pos(int x, int y);
     bool comprobar_ocupada();
     void ocupar();
     friend ostream& operator<< (ostream& os, const celda& celda_);

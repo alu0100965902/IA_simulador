@@ -8,10 +8,10 @@ int coche::get_y() {
   return posy_;
 }
 
-int coche::set_x(int x) {
+void coche::set_x(int x) {
   posx_ = x;
 }
 
-int coche::set_y(int y) {
+void coche::set_y(int y) {
   posy_ = y;
 }
