@@ -11,6 +11,7 @@ int main (void) {
   cin >> m;
   cin >> n;
   simulador.crear_entorno(m,n);
+  simulador.mostrar_entorno();
 
   do {
     cout << "Ingrese la Opción a ejecutar: 1.Punto partida, 2.Punto final, 3.Posición del coche, 4.Indicar obstaculo, 5.Obstaculos aleatorios." << endl;
@@ -73,8 +74,10 @@ int main (void) {
         simulador.ocupadas_aleatorias(num);
         }
         break;
-      default:
+      default: {
         cout << "Usted ha ingresado una opción incorrecta";
+        exit;
+        }
         break;
     }
   } while(opcion != 0);

@@ -17,4 +17,5 @@ class ejecutar {
     void pos_coche(int x, int y);
     void pos_inicial(int x, int y);
     void pos_final(int x, int y);
+    void mostrar_entorno();
 };

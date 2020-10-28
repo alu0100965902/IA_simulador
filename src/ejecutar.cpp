@@ -3,7 +3,6 @@
 void ejecutar::crear_entorno(int m, int n) {
   entorno tmp(m,n);
   entorno_ = tmp; 
-  entorno_.mostrar_malla();
 }
 
 void ejecutar::pedir_ocupadas(int x, int y) {
@@ -28,4 +27,8 @@ void ejecutar::pos_inicial(int x, int y) {
 
 void ejecutar::pos_final(int x, int y) {
   entorno_.set_pos_final(x, y);
+}
+
+void ejecutar::mostrar_entorno() {
+  entorno_.mostrar_malla();
 }
