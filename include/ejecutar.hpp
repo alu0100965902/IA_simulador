@@ -18,4 +18,7 @@ class ejecutar {
     void pos_inicial(int x, int y);
     void pos_final(int x, int y);
     void mostrar_entorno();
+    void prueba() {
+      cout << entorno_.distancia_linea_recta(0,0) << endl;
+    }
 };

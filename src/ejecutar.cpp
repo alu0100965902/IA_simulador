@@ -11,9 +11,17 @@ void ejecutar::pedir_ocupadas(int x, int y) {
 
 void ejecutar::ocupadas_aleatorias(int num) {
   srand(0);
-  int numeroOcupadas = rand() % num;
-  for(int i = 0; i < numeroOcupadas; i++) {
-    entorno_.set_ocupada(rand(), rand());
+
+  for(int i = 0; i < num; i++) {
+    int aux_x = rand() % entorno_.numero_col();
+    int aux_y = rand() % entorno_.numero_filas();
+    if (aux_x != entorno_.get_pos_inicial().first && aux_y != entorno_.get_pos_inicial().second
+        || aux_x != entorno_.get_pos_final().first && aux_y != entorno_.get_pos_final().second) {
+      entorno_.set_ocupada(aux_x, aux_y);
+        }
+    else {
+      i--;
+    }
   }
 }
 

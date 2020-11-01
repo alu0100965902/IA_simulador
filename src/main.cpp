@@ -12,73 +12,57 @@ int main (void) {
   cin >> n;
   simulador.crear_entorno(m,n);
   simulador.mostrar_entorno();
+  int x, y;
+  cout << "Ingrese el punto de partida" << endl;
+  cout << "X: ";
+  cin >> x;
+  cout << "\nY: ";
+  cin >> y;
+  cout << "\n";
+  simulador.pos_inicial(x, y);
+  cout << "Ingrese el punto final" << endl;
+  cout << "X: ";
+  cin >> x;
+  cout << "\nY: ";
+  cin >> y;
+  cout << "\n";
+  simulador.pos_final(x, y);
 
-  do {
-    cout << "Ingrese la Opción a ejecutar: 1.Punto partida, 2.Punto final, 3.Posición del coche, 4.Indicar obstaculo, 5.Obstaculos aleatorios." << endl;
-    cin >> opcion;
+  cout << "Ingrese la Opción a ejecutar:\n";
+  cout << "1.Indicar obstaculo.\n";
+  cout << "2. Obstaculos aleatorios." << endl;
+  cin >> opcion;
 
-    switch(opcion) {
-      case 1: {
-        int x = 0, y = 0;
-        cout << "Indicar la posicion inicial" << endl;
+  switch(opcion) {
+    case 1: {
+      int n_obstaculos = 0;
+      cout << "Numero de obstaculos" << endl;
+      cin >> n_obstaculos;
+      for (int i = 0; i < n_obstaculos; i++) {
+        cout << "Indique la posicion X e Y" << endl;
         cout << "X: ";
         cin >> x;
         cout << "\nY: ";
         cin >> y;
         cout << "\n";
-        simulador.pos_inicial(x, y);
-        }
-        break;
-      case 2: {
-        int x = 0, y = 0;
-        cout << "Indicar la posicion final" << endl;
-        cout << "X: ";
-        cin >> x;
-        cout << "\nY: ";
-        cin >> y;
-        cout << "\n";
-        simulador.pos_final(x, y);
-        }
-        break;
-      case 3: {
-        int x = 0, y = 0;
-        cout << "Indique la posicion X e Y del coche" << endl;
-        cout << "X: ";
-        cin >> x;
-        cout << "\nY: ";
-        cin >> y;
-        cout << "\n";
-        simulador.pos_coche(x, y);
-        }
-        break;
-      case 4: {
-        int x = 0, y = 0, n_obstaculos = 0;
-        cout << "Numero de obstaculos" << endl;
-        cin >> n_obstaculos;
-        for (int i = 0; i < n_obstaculos; i++) {
-          cout << "Indique la posicion X e Y" << endl;
-          cout << "X: ";
-          cin >> x;
-          cout << "\nY: ";
-          cin >> y;
-          cout << "\n";
-          // simulador.pedir_ocupadas(x, y);
-        }
-        }
-        break;
-      case 5: {
-        int num = 0;
-        cout << "Indique el porcentaje de obstaculos" << endl;
-        cout << "Num:";
-        cin >> num;
-        simulador.ocupadas_aleatorias(num);
-        }
-        break;
-      default: {
-        cout << "Usted ha ingresado una opción incorrecta";
-        exit;
-        }
-        break;
-    }
-  } while(opcion != 0);
+        simulador.pedir_ocupadas(x, y);
+      }     
+      }
+      break;
+    case 2: {
+      int num = 0;
+      cout << "Indique el porcentaje de obstaculos" << endl;
+      cout << "Num:";
+      cin >> num;
+      simulador.ocupadas_aleatorias(num);
+      }
+      break;
+    default: {
+      cout << "Usted ha ingresado una opción incorrecta";
+      exit;
+      }
+      break;
+  }
+    simulador.mostrar_entorno();
+  simulador.prueba();
 }

@@ -29,12 +29,12 @@ bool celda::comprobar_ocupada() {
 }
 
 void celda::ocupar() {
+  ocupada_ = true;
 }
 
 ostream& operator<< (ostream& os, const celda& celda_) {
   if (celda_.ocupada_)
     os << "|X|";
-
   else
     os << "| |";
   return os;
