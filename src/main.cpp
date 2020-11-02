@@ -65,4 +65,5 @@ int main (void) {
   }
     simulador.mostrar_entorno();
   simulador.prueba();
+  simulador.heuristico();
 }

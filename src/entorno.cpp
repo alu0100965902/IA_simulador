@@ -12,6 +12,9 @@ pair <int, int> entorno::get_pos_inicial() {
 pair <int, int> entorno::get_pos_final() {
   return puntoFinal_;
 }
+coche entorno::get_pos_coche() {
+  return coche_;
+}
 void entorno::set_pos_inicial(int x, int y){
   puntoInicial_.first = x;
   puntoInicial_.second = y;
@@ -71,15 +74,37 @@ int entorno::distancia_linea_recta(int x, int y) {
       distancia++;
     }
   } else if (y != puntoFinal_.second) {
+    while (y != puntoFinal_.second) {
       if (y < puntoFinal_.second)
         y++;
       else
         y--;
       distancia++;
+    }
   }
   return distancia;
 }
 
-void entorno::siguiente_posicion() {
+int entorno::distancia_rectilinea(int x, int y) {
+  int distancia = 0;
+  while (x != puntoFinal_.first) {
+    if (x < puntoFinal_.first)
+      x++;
+    else
+      x--;
+  distancia++;
+  }
+  while (y != puntoFinal_.second) {
+    if (y < puntoFinal_.second)
+      y++;
+    else
+      y--;
+    distancia++;
+  }
+  return distancia;
+}
 
+void entorno::mover_coche(int x, int y) {
+  coche_.set_x(x);
+  coche_.set_y(y);
 }

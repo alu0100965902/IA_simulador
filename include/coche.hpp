@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 #include "celda.hpp"
+
+#pragma once
 using namespace std;
 
 class coche {

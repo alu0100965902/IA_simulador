@@ -39,6 +39,29 @@ class entorno {
     void set_pos_final(int x, int y);
     pair <int, int> get_pos_inicial();
     pair <int, int> get_pos_final();
+    coche get_pos_coche();
     int distancia_linea_recta(int x, int y);
+    int distancia_rectilinea(int x, int y);
     void siguiente_posicion();
+    void mover_coche(int x, int y);
+
+    class CRow {
+        friend class entorno;
+    public:
+        celda& operator[](int col) {
+            return parent.malla_[row][col];
+        }
+    private:
+        CRow(entorno &parent_, int row_) : 
+            parent(parent_),
+            row(row_){
+         }
+
+        entorno& parent;
+        int row;
+    };
+    CRow operator[](int row) {
+      return CRow(*this, row);
+    }
+
 };
