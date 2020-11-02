@@ -34,7 +34,7 @@ void celda::ocupar() {
 
 ostream& operator<< (ostream& os, const celda& celda_) {
   if (celda_.ocupada_)
-    os << "|X|";
+    os << "|\e[96mX\e[0m|";
   else
     os << "| |";
   return os;

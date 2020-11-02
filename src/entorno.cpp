@@ -15,13 +15,13 @@ pair <int, int> entorno::get_pos_final() {
 coche entorno::get_pos_coche() {
   return coche_;
 }
-void entorno::set_pos_inicial(int x, int y){
+void entorno::set_pos_inicial(int x, int y) {
   puntoInicial_.first = x;
   puntoInicial_.second = y;
   posi_coche(x, y);
 }
 
-void entorno::set_pos_final(int x, int y){
+void entorno::set_pos_final(int x, int y) {
   puntoFinal_.first = x;
   puntoFinal_.second = y;
 }
@@ -39,11 +39,11 @@ void entorno::mostrar_malla() {
   for (int i = 0; i < malla_.size(); i++) {
     for (int j = 0; j < malla_[i].size(); j++) {
       if (coche_.get_x() == i && coche_.get_y() == j) {
-        cout << "|C|";
+        cout << "|\e[91mC\e[0m|";
       } else if (puntoFinal_.first == i && puntoFinal_.second == j) {
-        cout << "|E|";
-      } else if (puntoInicial_.first == i && puntoInicial_.second == j){
-       cout << "|S|";
+        cout << "|\e[93mE\e[0m|";
+      } else if (puntoInicial_.first == i && puntoInicial_.second == j) {
+       cout << "|\e[32mS\e[0m|";
       } else {
          cout << malla_[i][j];
       }

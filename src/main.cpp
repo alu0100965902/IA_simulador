@@ -11,8 +11,9 @@ int main (void) {
   cin >> m;
   cin >> n;
   simulador.crear_entorno(m,n);
-  simulador.mostrar_entorno();
+
   int x, y;
+
   cout << "Ingrese el punto de partida" << endl;
   cout << "X: ";
   cin >> x;
@@ -20,6 +21,7 @@ int main (void) {
   cin >> y;
   cout << "\n";
   simulador.pos_inicial(x, y);
+
   cout << "Ingrese el punto final" << endl;
   cout << "X: ";
   cin >> x;
@@ -29,7 +31,7 @@ int main (void) {
   simulador.pos_final(x, y);
 
   cout << "Ingrese la Opción a ejecutar:\n";
-  cout << "1.Indicar obstaculo.\n";
+  cout << "1. Indicar obstaculo.\n";
   cout << "2. Obstaculos aleatorios." << endl;
   cin >> opcion;
 
@@ -63,7 +65,7 @@ int main (void) {
       }
       break;
   }
-    simulador.mostrar_entorno();
+  simulador.mostrar_entorno();
   simulador.prueba();
   simulador.heuristico();
 }
