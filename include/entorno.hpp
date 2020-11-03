@@ -1,5 +1,6 @@
 #include "coche.hpp"
 #include "celda.hpp"
+#include "nodo.hpp"
 #include <vector>
 #include <utility> 
 using namespace std;

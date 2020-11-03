@@ -1,5 +1,6 @@
 #include "entorno.hpp"
 #include "coche.hpp"
+#include "nodo.hpp"
 #include <vector>
 #include <utility>
 
@@ -8,7 +9,7 @@ using namespace std;
 class ejecutar {
   private:
   entorno entorno_;
-  vector < pair <pair <int, int>, pair <int, int>>> vectorPosiblesCaminos;
+  vector < pair <nodo*, pair <int, int>>> vectorPosiblesCaminos;
   public:
     ejecutar() {
       vectorPosiblesCaminos.resize(0);

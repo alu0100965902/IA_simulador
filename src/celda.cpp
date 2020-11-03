@@ -32,6 +32,14 @@ void celda::ocupar() {
   ocupada_ = true;
 }
 
+void celda::pasoCoche() {
+  paso_coche = true;
+}
+
+bool celda::comprobar_coche() {
+  return paso_coche;
+}
+
 ostream& operator<< (ostream& os, const celda& celda_) {
   if (celda_.ocupada_)
     os << "|\e[96mX\e[0m|";

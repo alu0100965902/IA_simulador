@@ -44,6 +44,8 @@ void entorno::mostrar_malla() {
         cout << "|\e[93mE\e[0m|";
       } else if (puntoInicial_.first == i && puntoInicial_.second == j) {
        cout << "|\e[32mS\e[0m|";
+      } else if (malla_[i][j].comprobar_coche()) {
+        cout << "|\e[91m.\e[0m|";
       } else {
          cout << malla_[i][j];
       }
