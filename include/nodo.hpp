@@ -17,4 +17,5 @@ class nodo {
   }
   nodo* get_anterior();
   pair <int, int> get_pos();
+  friend bool operator==(const nodo& nodo_1, const nodo& nodo_2);
 };
