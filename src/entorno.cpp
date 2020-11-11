@@ -45,7 +45,7 @@ void entorno::mostrar_malla() {
       } else if (puntoInicial_.first == i && puntoInicial_.second == j) {
        cout << "|\e[32mS\e[0m|";
       } else if (malla_[i][j].comprobar_coche()) {
-        cout << "|\e[91m.\e[0m|";
+        cout << "|\e[7;91m.\e[0m|";
       } else {
          cout << malla_[i][j];
       }
@@ -75,7 +75,8 @@ int entorno::distancia_linea_recta(int x, int y) {
         x--;
       distancia++;
     }
-  } else if (y != puntoFinal_.second) {
+  } 
+  else if (y != puntoFinal_.second) {
     while (y != puntoFinal_.second) {
       if (y < puntoFinal_.second)
         y++;

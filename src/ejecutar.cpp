@@ -42,7 +42,6 @@ void ejecutar::mostrar_entorno() {
 }
 
 void ejecutar::heuristico() {
-  //cout << "A" << endl;
   int cocheX = entorno_.get_pos_coche().get_x();
   int cocheY = entorno_.get_pos_coche().get_y();
   int indice_actual = 0;
@@ -57,72 +56,63 @@ void ejecutar::heuristico() {
     for (int i = 0; i < 3; i++) {
       for (int j = 0; j < 3; j++) {
         if ((i + j) % 2) {
+
           int busqX = vectorPosiblesCaminos[indice_actual].first->get_pos().first + i - 1;
           int busqY = vectorPosiblesCaminos[indice_actual].first->get_pos().second + j - 1;
-         // cout << busqX << " " << busqY << " " << entorno_.numero_col()<< endl;
           if (busqX >= 0 && busqY >= 0 && busqX < entorno_.numero_col() && busqY < entorno_.numero_filas()) {
             if (!entorno_[busqX][busqY].comprobar_ocupada()) {
               
               int disHeu = entorno_.distancia_linea_recta(busqX, busqY) + entorno_.distancia_rectilinea(busqX, busqY)
                            + vectorPosiblesCaminos[indice_actual].second.first;
-             // cout << "X: " << busqX << "Y: " << busqY  << " Rectilinea: " << entorno_.distancia_rectilinea(busqX, busqY)
-            //        << " Linea Recta: " << entorno_.distancia_linea_recta(busqX, busqY) << "dis Heu: " << disHeu << endl;
 
               pair <int, int> disInicial(vectorPosiblesCaminos[indice_actual].second.first + 1, disHeu);
               nodo* nodoActual = new nodo (busqX, busqY, vectorPosiblesCaminos[indice_actual].first);
               pair <nodo*, pair <int, int>> pairNuevo(nodoActual, disInicial);
               vectorPosiblesCaminos.push_back(pairNuevo);
-             // cout << vectorPosiblesCaminos.size() << endl;
             }
           }
         }
       }
     }
-     // cout << "b" << endl;
 
-    //bool seguir = true;  
-   /* for (int i = 0; i < vectorPosiblesCaminos.size(); i++) {
-      if (vectorPosiblesCaminos[i].second.second < distancia_minima)
-      seguir = true;
-    }*/
-   /* if (!seguir)
-      break;*/
     int indice_anterior = -1;
+
     if (!(vectorPosiblesCaminos[indice_actual].first->get_pos().first == entorno_.get_pos_final().first &&
            vectorPosiblesCaminos[indice_actual].first->get_pos().second == entorno_.get_pos_final().second)) 
       vectorPosiblesCaminos.erase(vectorPosiblesCaminos.begin() + indice_actual);
+
     else {
-    //  cout << "AYAYAY" << endl;
       indice_anterior = indice_actual;
     }
+
     int posAux = 0;
     int disAux = 9999999;
-    for (int i = 0; i < vectorPosiblesCaminos.size(); i++) {
-     //     cout << "X= " << vectorPosiblesCaminos[i].first->get_pos().first << " Y= " << vectorPosiblesCaminos[i].first->get_pos().second << endl;
 
+    for (int i = 0; i < vectorPosiblesCaminos.size(); i++) {
+    
       if (vectorPosiblesCaminos[i].second.second < disAux) {
         disAux = vectorPosiblesCaminos[i].second.second;
         posAux = i;
-       // cout << "E " << posAux <<  endl;
       }
+
       if (vectorPosiblesCaminos[i].first->get_pos().first == entorno_.get_pos_final().first &&
            vectorPosiblesCaminos[i].first->get_pos().second == entorno_.get_pos_final().second) {
-       //      cout << "T" << endl;
+
         if (vectorPosiblesCaminos[i].second.second < distancia_minima) {
           distancia_minima = vectorPosiblesCaminos[i].second.first;
         }
     }
     }
-    //cout << "X= " << vectorPosiblesCaminos[posAux].first->get_pos().first << " Y= " << vectorPosiblesCaminos[posAux].first->get_pos().second << endl;
 
     indice_actual = posAux;
-
     if (indice_actual == indice_anterior)
       break;
 
   }
+
   int posFinal = -1;
   int disAux = 9999999;
+
   for (int i = 0; i < vectorPosiblesCaminos.size(); i++) {
     if (vectorPosiblesCaminos[i].first->get_pos().first == entorno_.get_pos_final().first &&
         vectorPosiblesCaminos[i].first->get_pos().second == entorno_.get_pos_final().second) {
@@ -133,12 +123,12 @@ void ejecutar::heuristico() {
     }
   }
   vector <nodo*> vectorInvertido;
- // cout << "tamaño" << vectorPosiblesCaminos.size() << endl;
   nodo* auxiliar = vectorPosiblesCaminos[posFinal].first;
   while (auxiliar->get_anterior() != NULL) {
     vectorInvertido.push_back(auxiliar);
     auxiliar = auxiliar -> get_anterior();
   }
+
   for (int i = vectorInvertido.size() - 1; i >= 0 ; i--) {
     entorno_.mover_coche(vectorInvertido[i]->get_pos().first, vectorInvertido[i]->get_pos().second);
     entorno_[vectorInvertido[i]->get_pos().first][vectorInvertido[i]->get_pos().second].pasoCoche();
@@ -146,56 +136,3 @@ void ejecutar::heuristico() {
     cout << endl;
   }
 }
-
-
-
-/*void ejecutar::heuristico() {
-
-  int indice_actual = 0;
-  nodo* nombre = new nodo (0, 0, NULL);
-
-  pair <int, int> posIni(cocheX, cocheY);
-  pair <int, int> distanciaIni (0, 0);
-  pair <pair <int, int>, pair <int, int>> pairPush (posIni, distanciaIni);
-  vectorPosiblesCaminos.push_back(pairPush);
-  while (vectorPosiblesCaminos.size() > 0 && 
-         !(vectorPosiblesCaminos[indice_actual].first.first == entorno_.get_pos_final().first
-           && vectorPosiblesCaminos[indice_actual].first.second == entorno_.get_pos_final().second)) {
-    for (int i = 0; i < 3; i++) {
-      for (int j = 0; j < 3; j++) {
-        if ((i != 1 || j != 1 ) && (i + j) % 2 == 1) {
-          int busqX = cocheX + i - 1;
-          int busqY = cocheY + j - 1;
-          if (busqX >= 0 && busqX < entorno_.numero_col() &&
-              busqY >= 0 && busqY < entorno_.numero_filas() &&
-              !entorno_[busqX][busqY].comprobar_ocupada()) {
-            pair <int, int> posAux(busqX, busqY);
-            int distanciaHeu = entorno_.distancia_linea_recta(busqX, busqY) + entorno_.distancia_rectilinea(busqX, busqY)
-                              + vectorPosiblesCaminos[indice_actual].second.first;
-            int distanciaRecorrida = vectorPosiblesCaminos[indice_actual].second.first + 1;
-            pair <int, int> distanciaAux (distanciaRecorrida, distanciaHeu);
-            pair < pair <int, int>, pair <int, int> > pairAux (posAux, distanciaAux);
-            vectorPosiblesCaminos.push_back(pairAux);
-          }
-        }
-      }
-    }
-    vectorPosiblesCaminos.erase(vectorPosiblesCaminos.begin() + indice_actual);
-    int posAux = 0;
-    int disAux = 9999999;
-    for (int i = 0; i < vectorPosiblesCaminos.size(); i++) {
-      if (vectorPosiblesCaminos[i].second.second < disAux) {
-        disAux = vectorPosiblesCaminos[i].second.second;
-        posAux = i;
-      }
-    }
-    entorno_.mover_coche(vectorPosiblesCaminos[posAux].first.first, vectorPosiblesCaminos[posAux].first.second);
-    cocheX = entorno_.get_pos_coche().get_x();
-    cocheY = entorno_.get_pos_coche().get_y();
-    cout << "X" <<vectorPosiblesCaminos[posAux].first.first <<endl;
-    cout << "Y" <<vectorPosiblesCaminos[posAux].first.second <<endl;
-
-    indice_actual = posAux;
-  }
-
-}*/
