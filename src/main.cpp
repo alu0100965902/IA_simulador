@@ -88,8 +88,9 @@ int main (int argc, char** argv) {
 
     simulador.mostrar_entorno();
     simulador.heuristico();
+    // simulador.heuristico_manhattan();
   
-  return 0;
+  // return 0;
   }
 
   else if (argc == 1) {
@@ -156,5 +157,6 @@ int main (int argc, char** argv) {
 
     simulador.mostrar_entorno();
     simulador.heuristico();
+    simulador.heuristico_manhattan();
   }
 }

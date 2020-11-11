@@ -23,4 +23,5 @@ class ejecutar {
     void pos_final(int x, int y);
     void mostrar_entorno();
     void heuristico();
+    void heuristico_manhattan();
 };
