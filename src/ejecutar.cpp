@@ -42,6 +42,9 @@ void ejecutar::mostrar_entorno() {
 }
 
 void ejecutar::heuristico() {
+  chrono::time_point<chrono::system_clock> start, end;
+  start = chrono::system_clock::now();
+
   int cocheX = entorno_.get_pos_coche().get_x();
   int cocheY = entorno_.get_pos_coche().get_y();
   int indice_actual = 0;
@@ -56,15 +59,25 @@ void ejecutar::heuristico() {
     for (int i = 0; i < 3; i++) {
       for (int j = 0; j < 3; j++) {
         if ((i + j) % 2) {
-
           int busqX = vectorPosiblesCaminos[indice_actual].first->get_pos().first + i - 1;
           int busqY = vectorPosiblesCaminos[indice_actual].first->get_pos().second + j - 1;
           if (busqX >= 0 && busqY >= 0 && busqX < entorno_.numero_col() && busqY < entorno_.numero_filas()) {
             if (!entorno_[busqX][busqY].comprobar_ocupada()) {
-              
+                nodo* auxiliar = vectorPosiblesCaminos[indice_actual].first;
+                bool yaEsta = false;
+              while (auxiliar->get_anterior() != NULL) {
+                auxiliar = auxiliar -> get_anterior();
+
+                if (auxiliar->get_pos().first == busqX && auxiliar->get_pos().second == busqY) {
+                  yaEsta = true;
+                }                
+            
+              }              
+              if (yaEsta) {
+                continue;
+              }
               int disHeu = entorno_.distancia_linea_recta(busqX, busqY) + entorno_.distancia_rectilinea(busqX, busqY)
                            + vectorPosiblesCaminos[indice_actual].second.first;
-
               pair <int, int> disInicial(vectorPosiblesCaminos[indice_actual].second.first + 1, disHeu);
               nodo* nodoActual = new nodo (busqX, busqY, vectorPosiblesCaminos[indice_actual].first);
               pair <nodo*, pair <int, int>> pairNuevo(nodoActual, disInicial);
@@ -74,30 +87,27 @@ void ejecutar::heuristico() {
         }
       }
     }
-
+    cout << "A" << endl;
+    cout << vectorPosiblesCaminos.size() << endl;
+    if (vectorPosiblesCaminos.size() == 1) {
+      break;
+    }
     int indice_anterior = -1;
-
     if (!(vectorPosiblesCaminos[indice_actual].first->get_pos().first == entorno_.get_pos_final().first &&
            vectorPosiblesCaminos[indice_actual].first->get_pos().second == entorno_.get_pos_final().second)) 
       vectorPosiblesCaminos.erase(vectorPosiblesCaminos.begin() + indice_actual);
-
     else {
       indice_anterior = indice_actual;
     }
-
     int posAux = 0;
     int disAux = 9999999;
-
     for (int i = 0; i < vectorPosiblesCaminos.size(); i++) {
-    
       if (vectorPosiblesCaminos[i].second.second < disAux) {
         disAux = vectorPosiblesCaminos[i].second.second;
         posAux = i;
       }
-
       if (vectorPosiblesCaminos[i].first->get_pos().first == entorno_.get_pos_final().first &&
            vectorPosiblesCaminos[i].first->get_pos().second == entorno_.get_pos_final().second) {
-
         if (vectorPosiblesCaminos[i].second.second < distancia_minima) {
           distancia_minima = vectorPosiblesCaminos[i].second.first;
         }
@@ -105,14 +115,13 @@ void ejecutar::heuristico() {
     }
 
     indice_actual = posAux;
+
     if (indice_actual == indice_anterior)
       break;
 
   }
-
   int posFinal = -1;
   int disAux = 9999999;
-
   for (int i = 0; i < vectorPosiblesCaminos.size(); i++) {
     if (vectorPosiblesCaminos[i].first->get_pos().first == entorno_.get_pos_final().first &&
         vectorPosiblesCaminos[i].first->get_pos().second == entorno_.get_pos_final().second) {
@@ -122,30 +131,45 @@ void ejecutar::heuristico() {
       }
     }
   }
-  vector <nodo*> vectorInvertido;
-  nodo* auxiliar = vectorPosiblesCaminos[posFinal].first;
-  while (auxiliar->get_anterior() != NULL) {
-    vectorInvertido.push_back(auxiliar);
-    auxiliar = auxiliar -> get_anterior();
-  }
+  end = chrono::system_clock::now();
 
-  for (int i = vectorInvertido.size() - 1; i >= 0 ; i--) {
-    entorno_.mover_coche(vectorInvertido[i]->get_pos().first, vectorInvertido[i]->get_pos().second);
-    entorno_[vectorInvertido[i]->get_pos().first][vectorInvertido[i]->get_pos().second].pasoCoche();
-    entorno_.mostrar_malla();
-    cout << endl;
+  int elapsed_seconds = chrono::duration_cast<chrono::microseconds>
+                      (end-start).count();
+  vector <nodo*> vectorInvertido;
+  cout << posFinal << endl;
+
+  if (posFinal != -1) {
+    nodo* auxiliar = vectorPosiblesCaminos[posFinal].first;
+    while (auxiliar->get_anterior() != NULL) {
+      vectorInvertido.push_back(auxiliar);
+      auxiliar = auxiliar -> get_anterior();
+    }
+    for (int i = vectorInvertido.size() - 1; i >= 0 ; i--) {
+      entorno_.mover_coche(vectorInvertido[i]->get_pos().first, vectorInvertido[i]->get_pos().second);
+      entorno_[vectorInvertido[i]->get_pos().first][vectorInvertido[i]->get_pos().second].pasoCoche();
+      entorno_.mostrar_malla();
+      cout << endl;
+    }
+  } else {
+    cout << "Camino no encontrado \n" << endl;
   }
+  
+    cout << "Tamaño camino: " << vectorInvertido.size() << endl;
+    cout << "Numero de nodos: " << vectorPosiblesCaminos.size() << endl;
+    cout << "Tiempo heuristico: " << elapsed_seconds << "ms\n";
 }
 
 
 void ejecutar::heuristico_manhattan() {
+  chrono::time_point<chrono::system_clock> start, end;
+  start = chrono::system_clock::now();
+
   int cocheX = entorno_.get_pos_coche().get_x();
   int cocheY = entorno_.get_pos_coche().get_y();
   int indice_actual = 0;
   int distancia_minima = 999999;
-
   nodo* nodoInicial = new nodo (cocheX, cocheY, NULL);
-  int distanciaHeu = entorno_.distancia_manhattan(cocheX, cocheY) + entorno_.distancia_manhattan_fin(cocheX, cocheY);
+  int distanciaHeu = entorno_.distancia_manhattan(cocheX, cocheY) + entorno_.distancia_manhattan_final(cocheX, cocheY);
   pair <int, int> distanciaIni(0, distanciaHeu);
   pair <nodo*, pair <int, int>> pairAux (nodoInicial, distanciaIni);
   vectorPosiblesCaminos.push_back(pairAux);
@@ -154,15 +178,25 @@ void ejecutar::heuristico_manhattan() {
     for (int i = 0; i < 3; i++) {
       for (int j = 0; j < 3; j++) {
         if ((i + j) % 2) {
-
           int busqX = vectorPosiblesCaminos[indice_actual].first->get_pos().first + i - 1;
           int busqY = vectorPosiblesCaminos[indice_actual].first->get_pos().second + j - 1;
           if (busqX >= 0 && busqY >= 0 && busqX < entorno_.numero_col() && busqY < entorno_.numero_filas()) {
             if (!entorno_[busqX][busqY].comprobar_ocupada()) {
-              
-              int disHeu = entorno_.distancia_manhattan(busqX, busqY) + entorno_.distancia_manhattan_fin(busqX, busqY)
-                           + vectorPosiblesCaminos[indice_actual].second.first;
+                nodo* auxiliar = vectorPosiblesCaminos[indice_actual].first;
+                bool yaEsta = false;
+              while (auxiliar->get_anterior() != NULL) {
+                auxiliar = auxiliar -> get_anterior();
 
+                if (auxiliar->get_pos().first == busqX && auxiliar->get_pos().second == busqY) {
+                  yaEsta = true;
+                }                
+            
+              }              
+              if (yaEsta) {
+                continue;
+              }
+              int disHeu = entorno_.distancia_manhattan(busqX, busqY) + entorno_.distancia_manhattan_final(busqX, busqY)
+                           + vectorPosiblesCaminos[indice_actual].second.first;
               pair <int, int> disInicial(vectorPosiblesCaminos[indice_actual].second.first + 1, disHeu);
               nodo* nodoActual = new nodo (busqX, busqY, vectorPosiblesCaminos[indice_actual].first);
               pair <nodo*, pair <int, int>> pairNuevo(nodoActual, disInicial);
@@ -172,44 +206,39 @@ void ejecutar::heuristico_manhattan() {
         }
       }
     }
-
+    cout << "A" << endl;
+    cout << vectorPosiblesCaminos.size() << endl;
+    if (vectorPosiblesCaminos.size() == 1) {
+      break;
+    }
     int indice_anterior = -1;
-
     if (!(vectorPosiblesCaminos[indice_actual].first->get_pos().first == entorno_.get_pos_final().first &&
            vectorPosiblesCaminos[indice_actual].first->get_pos().second == entorno_.get_pos_final().second)) 
       vectorPosiblesCaminos.erase(vectorPosiblesCaminos.begin() + indice_actual);
-
     else {
       indice_anterior = indice_actual;
     }
-
     int posAux = 0;
     int disAux = 9999999;
-
     for (int i = 0; i < vectorPosiblesCaminos.size(); i++) {
-    
       if (vectorPosiblesCaminos[i].second.second < disAux) {
         disAux = vectorPosiblesCaminos[i].second.second;
         posAux = i;
       }
-
       if (vectorPosiblesCaminos[i].first->get_pos().first == entorno_.get_pos_final().first &&
            vectorPosiblesCaminos[i].first->get_pos().second == entorno_.get_pos_final().second) {
-
         if (vectorPosiblesCaminos[i].second.second < distancia_minima) {
           distancia_minima = vectorPosiblesCaminos[i].second.first;
         }
     }
     }
     indice_actual = posAux;
-    
+
     if (indice_actual == indice_anterior)
       break;
   }
-
   int posFinal = -1;
   int disAux = 9999999;
-
   for (int i = 0; i < vectorPosiblesCaminos.size(); i++) {
     if (vectorPosiblesCaminos[i].first->get_pos().first == entorno_.get_pos_final().first &&
         vectorPosiblesCaminos[i].first->get_pos().second == entorno_.get_pos_final().second) {
@@ -219,17 +248,31 @@ void ejecutar::heuristico_manhattan() {
       }
     }
   }
-  vector <nodo*> vectorInvertido;
-  nodo* auxiliar = vectorPosiblesCaminos[posFinal].first;
-  while (auxiliar->get_anterior() != NULL) {
-    vectorInvertido.push_back(auxiliar);
-    auxiliar = auxiliar -> get_anterior();
-  }
+  end = chrono::system_clock::now();
 
-  for (int i = vectorInvertido.size() - 1; i >= 0 ; i--) {
-    entorno_.mover_coche(vectorInvertido[i]->get_pos().first, vectorInvertido[i]->get_pos().second);
-    entorno_[vectorInvertido[i]->get_pos().first][vectorInvertido[i]->get_pos().second].pasoCoche();
-    entorno_.mostrar_malla();
-    cout << endl;
+  int elapsed_seconds = chrono::duration_cast<chrono::microseconds>
+                      (end-start).count();
+  vector <nodo*> vectorInvertido;
+  cout << posFinal << endl;
+
+  if (posFinal != -1) {
+    nodo* auxiliar = vectorPosiblesCaminos[posFinal].first;
+    while (auxiliar->get_anterior() != NULL) {
+      vectorInvertido.push_back(auxiliar);
+      auxiliar = auxiliar -> get_anterior();
+    }
+    for (int i = vectorInvertido.size() - 1; i >= 0 ; i--) {
+      entorno_.mover_coche(vectorInvertido[i]->get_pos().first, vectorInvertido[i]->get_pos().second);
+      entorno_[vectorInvertido[i]->get_pos().first][vectorInvertido[i]->get_pos().second].pasoCoche();
+      entorno_.mostrar_malla();
+      cout << endl;
+    }
+  } 
+  else {
+    cout << "Camino no encontrado \n" << endl;
   }
+  
+    cout << "Tamaño camino: " << vectorInvertido.size() << endl;
+    cout << "Numero de nodos: " << vectorPosiblesCaminos.size() << endl;
+    cout << "Tiempo heuristico: " << elapsed_seconds << "ms\n";
 }

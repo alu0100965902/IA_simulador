@@ -114,7 +114,7 @@ int entorno::distancia_manhattan(int x, int y) {
   return distancia;
 }
 
-int entorno::distancia_manhattan_fin(int x, int y) {
+int entorno::distancia_manhattan_final(int x, int y) {
   int distancia = 0;
 
   distancia =  abs(puntoFinal_.first - puntoFinal_.second);

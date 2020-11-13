@@ -87,8 +87,8 @@ int main (int argc, char** argv) {
     }
 
     simulador.mostrar_entorno();
-    simulador.heuristico();
-    // simulador.heuristico_manhattan();
+    // simulador.heuristico();
+    simulador.heuristico_manhattan();
   
   // return 0;
   }
@@ -156,7 +156,7 @@ int main (int argc, char** argv) {
     }
 
     simulador.mostrar_entorno();
-    simulador.heuristico();
+    // simulador.heuristico();
     simulador.heuristico_manhattan();
   }
 }
