@@ -45,8 +45,8 @@ class entorno {
     int distancia_linea_recta(int x, int y);
     int distancia_rectilinea(int x, int y);
     void siguiente_posicion();
-    int distancia_manhattan(int x, int y);
-    int distancia_manhattan_final(int x, int y);
+    int distancia_manhattan(int &x, int &y);
+    int distancia_manhattan_final(int &x, int &y);
     void mover_coche(int x, int y);
 
     class CRow {

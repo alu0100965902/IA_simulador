@@ -80,17 +80,19 @@ int main (int argc, char** argv) {
         }
         simulador.pedir_ocupadas(vposiciones_obs[0] - '0', vposiciones_obs[1] - '0');
         } 
+    
+      simulador.mostrar_entorno();
+      if (vAux[0] - '0' > 7 && vAux[1] - '0' > 7) {
+        simulador.heuristico();
+      }
+      else if (vAux[0] - '0' <= 7 && vAux[1] - '0' <= 7) {
+        simulador.heuristico_manhattan();
+      }
     }
         
     else {
       cout <<"\nNo se pudo abrir el fichero";
     }
-
-    simulador.mostrar_entorno();
-    // simulador.heuristico();
-    simulador.heuristico_manhattan();
-  
-  // return 0;
   }
 
   else if (argc == 1) {
@@ -156,7 +158,11 @@ int main (int argc, char** argv) {
     }
 
     simulador.mostrar_entorno();
-    // simulador.heuristico();
-    simulador.heuristico_manhattan();
+    if (m > 7 && n > 7) {
+      simulador.heuristico();
+    }
+    else if (m <= 7 && n <= 7) {
+      simulador.heuristico_manhattan();
+    }
   }
 }

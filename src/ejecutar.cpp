@@ -169,14 +169,14 @@ void ejecutar::heuristico_manhattan() {
   int indice_actual = 0;
   int distancia_minima = 999999;
   nodo* nodoInicial = new nodo (cocheX, cocheY, NULL);
-  int distanciaHeu = entorno_.distancia_manhattan(cocheX, cocheY) + entorno_.distancia_manhattan_final(cocheX, cocheY);
+  int distanciaHeu = entorno_.distancia_manhattan(cocheX, cocheY);
   pair <int, int> distanciaIni(0, distanciaHeu);
   pair <nodo*, pair <int, int>> pairAux (nodoInicial, distanciaIni);
   vectorPosiblesCaminos.push_back(pairAux);
 
   while (vectorPosiblesCaminos.size() > 0) {
-    for (int i = 0; i < 3; i++) {
-      for (int j = 0; j < 3; j++) {
+    for (int i = 0; i < 3; ++i) {
+      for (int j = 0; j < 3; ++j) {
         if ((i + j) % 2) {
           int busqX = vectorPosiblesCaminos[indice_actual].first->get_pos().first + i - 1;
           int busqY = vectorPosiblesCaminos[indice_actual].first->get_pos().second + j - 1;
@@ -190,12 +190,11 @@ void ejecutar::heuristico_manhattan() {
                 if (auxiliar->get_pos().first == busqX && auxiliar->get_pos().second == busqY) {
                   yaEsta = true;
                 }                
-            
               }              
               if (yaEsta) {
                 continue;
               }
-              int disHeu = entorno_.distancia_manhattan(busqX, busqY) + entorno_.distancia_manhattan_final(busqX, busqY)
+              int disHeu = entorno_.distancia_manhattan(busqX, busqY)
                            + vectorPosiblesCaminos[indice_actual].second.first;
               pair <int, int> disInicial(vectorPosiblesCaminos[indice_actual].second.first + 1, disHeu);
               nodo* nodoActual = new nodo (busqX, busqY, vectorPosiblesCaminos[indice_actual].first);
@@ -220,7 +219,8 @@ void ejecutar::heuristico_manhattan() {
     }
     int posAux = 0;
     int disAux = 9999999;
-    for (int i = 0; i < vectorPosiblesCaminos.size(); i++) {
+
+    for (int i = 0; i < vectorPosiblesCaminos.size(); ++i) {
       if (vectorPosiblesCaminos[i].second.second < disAux) {
         disAux = vectorPosiblesCaminos[i].second.second;
         posAux = i;
@@ -239,7 +239,7 @@ void ejecutar::heuristico_manhattan() {
   }
   int posFinal = -1;
   int disAux = 9999999;
-  for (int i = 0; i < vectorPosiblesCaminos.size(); i++) {
+  for (int i = 0; i < vectorPosiblesCaminos.size(); ++i) {
     if (vectorPosiblesCaminos[i].first->get_pos().first == entorno_.get_pos_final().first &&
         vectorPosiblesCaminos[i].first->get_pos().second == entorno_.get_pos_final().second) {
       if (vectorPosiblesCaminos[i].second.second < disAux) {
@@ -261,7 +261,7 @@ void ejecutar::heuristico_manhattan() {
       vectorInvertido.push_back(auxiliar);
       auxiliar = auxiliar -> get_anterior();
     }
-    for (int i = vectorInvertido.size() - 1; i >= 0 ; i--) {
+    for (int i = vectorInvertido.size() - 1; i >= 0 ; --i) {
       entorno_.mover_coche(vectorInvertido[i]->get_pos().first, vectorInvertido[i]->get_pos().second);
       entorno_[vectorInvertido[i]->get_pos().first][vectorInvertido[i]->get_pos().second].pasoCoche();
       entorno_.mostrar_malla();
