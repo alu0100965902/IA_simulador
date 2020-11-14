@@ -87,8 +87,6 @@ void ejecutar::heuristico() {
         }
       }
     }
-    cout << "A" << endl;
-    cout << vectorPosiblesCaminos.size() << endl;
     if (vectorPosiblesCaminos.size() == 1) {
       break;
     }
@@ -136,7 +134,6 @@ void ejecutar::heuristico() {
   int elapsed_seconds = chrono::duration_cast<chrono::microseconds>
                       (end-start).count();
   vector <nodo*> vectorInvertido;
-  cout << posFinal << endl;
 
   if (posFinal != -1) {
     nodo* auxiliar = vectorPosiblesCaminos[posFinal].first;
@@ -169,7 +166,7 @@ void ejecutar::heuristico_manhattan() {
   int indice_actual = 0;
   int distancia_minima = 999999;
   nodo* nodoInicial = new nodo (cocheX, cocheY, NULL);
-  int distanciaHeu = entorno_.distancia_manhattan(cocheX, cocheY);
+  int distanciaHeu = entorno_.distancia_manhattan(nodoInicial);
   pair <int, int> distanciaIni(0, distanciaHeu);
   pair <nodo*, pair <int, int>> pairAux (nodoInicial, distanciaIni);
   vectorPosiblesCaminos.push_back(pairAux);
@@ -194,10 +191,10 @@ void ejecutar::heuristico_manhattan() {
               if (yaEsta) {
                 continue;
               }
-              int disHeu = entorno_.distancia_manhattan(busqX, busqY)
+              nodo* nodoActual = new nodo (busqX, busqY, vectorPosiblesCaminos[indice_actual].first);
+              int disHeu = entorno_.distancia_manhattan(nodoActual)
                            + vectorPosiblesCaminos[indice_actual].second.first;
               pair <int, int> disInicial(vectorPosiblesCaminos[indice_actual].second.first + 1, disHeu);
-              nodo* nodoActual = new nodo (busqX, busqY, vectorPosiblesCaminos[indice_actual].first);
               pair <nodo*, pair <int, int>> pairNuevo(nodoActual, disInicial);
               vectorPosiblesCaminos.push_back(pairNuevo);
             }
@@ -205,8 +202,6 @@ void ejecutar::heuristico_manhattan() {
         }
       }
     }
-    cout << "A" << endl;
-    cout << vectorPosiblesCaminos.size() << endl;
     if (vectorPosiblesCaminos.size() == 1) {
       break;
     }
@@ -233,7 +228,6 @@ void ejecutar::heuristico_manhattan() {
     }
     }
     indice_actual = posAux;
-
     if (indice_actual == indice_anterior)
       break;
   }
@@ -253,7 +247,6 @@ void ejecutar::heuristico_manhattan() {
   int elapsed_seconds = chrono::duration_cast<chrono::microseconds>
                       (end-start).count();
   vector <nodo*> vectorInvertido;
-  cout << posFinal << endl;
 
   if (posFinal != -1) {
     nodo* auxiliar = vectorPosiblesCaminos[posFinal].first;

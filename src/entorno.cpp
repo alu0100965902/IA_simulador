@@ -107,20 +107,9 @@ int entorno::distancia_rectilinea(int x, int y) {
   return distancia;
 }
 
-int entorno::distancia_manhattan(int &x, int &y) {
-  int distancia = 0;
-
-  distancia = abs(puntoInicial_.first - puntoInicial_.second) + abs(puntoFinal_.first - puntoFinal_.second);
-  return distancia;
+int entorno::distancia_manhattan(nodo* nodo_coche) {
+  return abs(nodo_coche->get_pos().first - puntoFinal_.first) + abs(nodo_coche->get_pos().second - puntoFinal_.second);
 }
-
-int entorno::distancia_manhattan_final(int &x, int &y) {
-  int distancia = 0;
-
-  distancia =  abs(puntoFinal_.first - puntoFinal_.second);
-  return distancia;
-}
-
 
 void entorno::mover_coche(int x, int y) {
   coche_.set_x(x);

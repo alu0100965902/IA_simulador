@@ -82,10 +82,14 @@ int main (int argc, char** argv) {
         } 
     
       simulador.mostrar_entorno();
-      if (vAux[0] - '0' > 7 && vAux[1] - '0' > 7) {
+      cout << "Elija la funcion que quiere utilizar: \n";
+      cout << "1. Euclideo\n";
+      cout << "2. Manhattan\n";
+      int opcion_heu;
+      cin >> opcion_heu;
+      if (opcion_heu == 1) {
         simulador.heuristico();
-      }
-      else if (vAux[0] - '0' <= 7 && vAux[1] - '0' <= 7) {
+      } else if (opcion_heu == 2) {
         simulador.heuristico_manhattan();
       }
     }
@@ -158,10 +162,14 @@ int main (int argc, char** argv) {
     }
 
     simulador.mostrar_entorno();
-    if (m > 7 && n > 7) {
+    cout << "Elija la funcion que quiere utilizar: \n";
+    cout << "1. Euclideo\n";
+    cout << "2. Manhattan\n";
+    int opcion_heu;
+    cin >> opcion_heu;
+    if (opcion_heu == 1) {
       simulador.heuristico();
-    }
-    else if (m <= 7 && n <= 7) {
+    } else if (opcion_heu == 2) {
       simulador.heuristico_manhattan();
     }
   }
