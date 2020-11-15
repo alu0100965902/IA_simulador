@@ -6,7 +6,7 @@ Pasos a seguir para ejecutar el programa:
 
   - cd build
   - make
-  - ./simulador o ./simulador datos.txt
+  - ./simulador  ó  ./simulador datos.txt
 
 
 
